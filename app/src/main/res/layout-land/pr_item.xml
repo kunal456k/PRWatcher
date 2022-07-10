@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="pr"
+            type="com.kunal456k.prwatcher.models.PullRequest" />
+        <import type="com.kunal456k.prwatcher.utils.TextUtilKt"/>
+    </data>
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        app:cardCornerRadius="10dp"
+        app:cardUseCompatPadding="true"
+        android:layout_height="180dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.kunal456k.prwatcher.views.UrlImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:placeHolderSrc="@drawable/place_holder_small"
+                app:brokenImageSrc="@drawable/broken_image_small"
+                app:layout_constraintEnd_toStartOf="@id/image_guide"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                imageUrl="@{pr.user.avatarUrl}"/>
+            <androidx.constraintlayout.widget.Guideline
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:id="@+id/image_guide"
+                app:layout_constraintGuide_percent="0.15"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_margin="5dp"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/image_guide"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/pr_title"
+                android:text="@{pr.title}"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textSize="14sp"
+                android:id="@+id/created_time"
+                android:gravity="start|center_vertical"
+                app:layout_constraintStart_toEndOf="@id/image_guide"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pr_title"
+                android:text="@{`Created: `+TextUtilKt.getPresentableTime(pr.created)}"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textSize="14sp"
+                android:id="@+id/closed_time"
+                android:gravity="start|center_vertical"
+                app:layout_constraintStart_toEndOf="@id/image_guide"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/created_time"
+                android:text="@{`Closed   : `+TextUtilKt.getPresentableTime(pr.closed)}"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textSize="14sp"
+                android:id="@+id/username"
+                android:gravity="start|center_vertical"
+                app:layout_constraintStart_toEndOf="@id/image_guide"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/closed_time"
+                android:text="@{`User       : `+pr.user.name}"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

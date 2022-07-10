@@ -5,10 +5,27 @@
         <variable
             name="prPageViewModel"
             type="com.kunal456k.prwatcher.viewmodels.PRPageViewModel" />
+        <variable
+            name="repoOwner"
+            type="java.lang.String" />
+        <variable
+            name="repoName"
+            type="java.lang.String" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="24sp"
+            android:layout_margin="20dp"
+            android:id="@+id/repo_title"
+            android:text="@{(repoOwner != null &amp;&amp; repoName != null) ? repoOwner+` \\ `+repoName : ``}"
+            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -22,9 +39,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            app:layout_constraintTop_toBottomOf="@id/repo_title"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/pr_recycler"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
