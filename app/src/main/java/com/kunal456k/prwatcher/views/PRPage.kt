@@ -3,10 +3,13 @@ package com.kunal456k.prwatcher.views
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.kunal456k.prwatcher.adapters.PRListAdapter
 import com.kunal456k.prwatcher.component.DaggerAppComponent
 import com.kunal456k.prwatcher.databinding.PrPageBinding
 import com.kunal456k.prwatcher.viewmodels.PRPageViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PRPage : AppCompatActivity() {
@@ -33,10 +36,11 @@ class PRPage : AppCompatActivity() {
         binding.repoOwner = owner
         binding.repoName = repo
         binding.prRecycler.adapter = prListAdapter
-        prPageViewModel.startLoadingClosedPRs(owner, repo)
-        prPageViewModel.prLiveData.observe(this) {
-            Log.d("test", "init: pull requests updated")
-            prListAdapter.update(it)
+        prPageViewModel.loadClosedPRs(owner, repo)
+        lifecycleScope.launch {
+            prPageViewModel.pullRequestsFlow.collectLatest { pagingData ->
+                prListAdapter.submitData(pagingData)
+            }
         }
     }
 }

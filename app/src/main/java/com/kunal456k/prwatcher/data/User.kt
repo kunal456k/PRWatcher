@@ -1,4 +1,4 @@
-package com.kunal456k.prwatcher.models
+package com.kunal456k.prwatcher.data
 
 import com.google.gson.annotations.SerializedName
 

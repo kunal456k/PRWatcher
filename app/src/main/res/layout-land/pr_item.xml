@@ -3,7 +3,7 @@
     <data>
         <variable
             name="pr"
-            type="com.kunal456k.prwatcher.models.PullRequest" />
+            type="com.kunal456k.prwatcher.data.PullRequest" />
         <import type="com.kunal456k.prwatcher.utils.TextUtilKt"/>
     </data>
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"

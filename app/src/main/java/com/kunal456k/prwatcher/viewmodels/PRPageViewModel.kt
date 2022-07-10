@@ -1,19 +1,25 @@
 package com.kunal456k.prwatcher.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.paging.PagingData
 import com.kunal456k.prwatcher.component.ActivityScope
-import com.kunal456k.prwatcher.models.PullRequest
+import com.kunal456k.prwatcher.data.PullRequest
 import com.kunal456k.prwatcher.repository.PRRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @ActivityScope
-class PRPageViewModel @Inject constructor(private val prRepository: PRRepository){
+class PRPageViewModel @Inject constructor(private val prRepository: PRRepository) : ViewModel() {
 
-    fun startLoadingClosedPRs(owner: String, repo: String) {
-        prRepository.loadClosedPRs(prLiveData as MutableLiveData, message as MutableLiveData, owner, repo)
+    private var repoOwner: String = ""
+    private var repoName: String = ""
+
+    lateinit var pullRequestsFlow: Flow<PagingData<PullRequest>>
+
+    fun loadClosedPRs(repoOwner: String, repoName: String){
+        if (this.repoOwner == repoOwner && this.repoName == repoName) return
+        this.repoOwner = repoOwner
+        this.repoName = repoName
+        pullRequestsFlow = prRepository.loadClosedPRs(repoOwner, repoName)
     }
-
-    val prLiveData: LiveData<List<PullRequest>> = MutableLiveData()
-    val message: LiveData<String> = MutableLiveData()
 }
